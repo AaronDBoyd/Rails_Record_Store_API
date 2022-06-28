@@ -12,19 +12,23 @@ class AlbumsController < ApplicationController
 
   def create
     @album = Album.create!(album_params)
-    json_response(@album)
+    json_response(@album, :created)
   end
 
   def update
     @album = Album.find(params[:id])
-    @album.update(album_params)
-    # added json response
+    @album.update!(album_params)
+    # added json response instead of message
     json_response(@album)
   end
 
   def destroy 
     @album = Album.find(params[:id])
-    @album.destroy
+    if @album.destroy
+      render status: 200, json: {
+        message: "This album has been destroyed successfully."
+      }
+    end
   end
 
   private
