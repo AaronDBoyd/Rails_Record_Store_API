@@ -14,17 +14,23 @@ class SongsController < ApplicationController
 
   def create
     @album = Album.find(params[:album_id])
-    # @song = Song.create!(song_params, album_id: @album.id)
     @song = Song.create!(song_params)
     json_response(@song, :created)
   end
 
   def update
-
+    @song = Song.find(params[:id])
+    @song.update!(song_params)
+    json_response(@song)
   end
 
   def destroy
-
+    @song = Song.find(params[:id])
+    if @song.destroy
+      render status: 200, json: {
+        message: "This album has been destroyed successfully."
+      }
+    end
   end
 
   private
