@@ -11,7 +11,7 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = Album.create(album_params)
+    @album = Album.create!(album_params)
     json_response(@album)
   end
 
